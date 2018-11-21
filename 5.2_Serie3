@@ -609,16 +609,16 @@ shocks;
 //  var e_ksi;
 //  periods 1:4;
 //  values 0.005;
-// Shock 4 (Shock to the quality of capital with QE. 0.5 % depreciation of capital stock in 4 quarters. Purchases with peak effect of 30% of GDP, from which 25% are corporate bonds and 75% are government bonds. Taylor-rule with ZLB.)
-  var e_ksi;
+// Shock 4 (Shock to the quality of capital with QE. 0.5 % depreciation of capital stock in 4 quarters. Purchases with peak effect of 30% of GDP, from which 75% are corporate bonds and 25% are government bonds. Taylor-rule with ZLB.)
+var e_ksi;
   periods 1:4;
   values 0.005;
   var e_psi;
   periods 1;
-  values 0.0225525;
+  values 0.06765750;
   var e_Gamma;
   periods 1;
-  values 0.563775;
+  values 0.187925;
 end;
 options_.slowc     =   1;
 options_.maxit_     =   1000;

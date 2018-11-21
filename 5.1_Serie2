@@ -1,17 +1,20 @@
-// Referencer:
-// Modellen er originalt replikeret af:  Sören Karau (Soerenkarau@web.de 2
-//                              Arne Vogler (Arne.Vogler@web.de)
+// References:
+// The model is originally replicated by: Sören Karau (Soerenkarau@web.de and
+//                                        Arne Vogler (Arne.Vogler@web.de) and
+//					  Romedahl Poulsen (2017)
 // Gertler, M. and Karadi, P. 'QE 1 vs. 2 vs. 3...: A Framework for 
 // Analyzing Large-Scale Asset Purchases as a Monetary Policy Tool'
 //**************************************************************************
-// Egne justeringer ift. originalkode
-// 1. Husholdningernes ejerskab er fjernet fra modellen. Dette er gjort ved at 
-// fjerne deres beholdninger i steady-state, samt udelade muligheden for at koebe stats- og virksomhedsobligationer.
-// 2. Jeg har modsat originalmodellen indfoert mulighed for centralbanken kan saenke den nominelle rente til nul, hvor den vil vaere bundet.
-// 3. Chok til modellen er ikke en del af originalkoden, hvormed jeg selv har udfoert disse. For hver figur
-// i opgaven er disse praesenteret i sektion 4 (nederst).
+// Own adjustments to the code 
+// 1. The household ownership of corporate bonds and government bonds is removed from the model, which is done 
+// by removing the stocks in steady state and further by removing the opportunity for households to purchase these types of assets.
+// 2. A ZLB is implemented for the central bank, in which it is unable to reduce the nominal interest rate 
+// by more than -2pp from the steady state level for the nominal interest rate, which is 2% in the original model.
+// 3. A capital shock is implemented.
+// 4. The distribution of corporate bonds and government bonds are adjusted in the code in order to 
+// be able to observe the different effects on the economy.
 //--------------------------------------------------------------------------
-// 1. Variable i modellen
+// 1. Variables in the model
 //--------------------------------------------------------------------------
 
 var
@@ -42,7 +45,7 @@ parameters
     Welf_ss a_ss ksi_ss g_ss shock_ir_ss infl_ss inflstar_ss psi_ss Gamma_ss
     shock_psi_ss shock_Gamma_ss QKg_Y_ss qBg_Y_ss QKg_A_ss qBg_A_ss zlb_ss;
 //--------------------------------------------------------------------------
-// 2. Kalibrerede parametre
+// 2. Calibrated parameters (see Appendix B)
 //--------------------------------------------------------------------------
 
 //  parameters:
@@ -104,7 +107,7 @@ parameters
     omega=0.00072872;
     lambda=0.34530233;
 
-//  Steady-State vaerdier:
+//  Steady-State values:
     a_ss=0;
     ksi_ss=0;
     ksi_ss=0;
@@ -595,18 +598,18 @@ end;
 
 
 //--------------------------------------------------------------------------
-// 4. Chok til modellen
+// 4. Shocks to the modellen
 //--------------------------------------------------------------------------
 
 shocks;
 //---------------------------------------------------------------------------
-// Figur 5.2
+// Figure 3
 //--------------------------------------------------------------------------- 
-// Chok 3 (Kapitalkvalitets-Chok uden QE. 0,5 pct. afskrivning af kapitalapparat i 4 perioder. ZLB binder)(Renteregel 3)
+// Shock 3 (Shock to the quality of capital without QE. 0.5 % depreciation of capital stock in 4 quarters. ZLB is binding.) 
 //  var e_ksi;
 //  periods 1:4;
 //  values 0.005;
-// Chok 4 (Kapitalkvalitets-Chok med QE. 0,5 pct. afskrivning af kapitalapparat i 4 perioder. Opkoeb af 30% af Y i peak-effekt, hvoraf 25pct er virksomhedsobligationer og 75pct statsobligationer. Taylor-regel med ZLB)(Renteregel 3)
+// Shock 4 (Shock to the quality of capital with QE. 0.5 % depreciation of capital stock in 4 quarters. Purchases with peak effect of 30% of GDP, from which 25% are corporate bonds and 75% are government bonds. Taylor-rule with ZLB.)
   var e_ksi;
   periods 1:4;
   values 0.005;
@@ -670,7 +673,6 @@ plot(R*4*100)
 title('Real interest rate (R)');
 axis([0 40 -inf inf]);
 axis 'auto y';
-ylabel('% change from SS', 'fontweight','bold')
 hline = refline([0 0]);
 hline.Color = 'k';
 subplot(3,3,8);
@@ -687,6 +689,4 @@ axis([0 40 -inf inf]);
 axis 'auto y';
 hline = refline([0 0]);
 hline.Color = 'k';
-
-
 
